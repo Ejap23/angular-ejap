@@ -1,10 +1,12 @@
-<div class="w-full h-dvh bg-slate-950 flex items-center justify-center">
-    
-        <label for="email" class="block mb-2 text-sm font-medium text-slate-100 dark:text-white">Add to do list</label>
-        <input type="email" id="email" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="To do">
+
+        <div class="w-full h-1/2 bg-slate-950 flex items-center justify-center flex-col">
+                <label for="todoItem" class="block mb-2 text-lg font-medium text-slate-100 dark:text-white">Add to do list</label>
+                <input type="text" name="todoItem" id="todoItem" [formControl]="todoItem" aria-describedby="helper-text-explanation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="To do">
+                <button (click)="pushItemToList()" class="text-slate-100">ADD</button> 
+        </div>
       
-        
-         <button type="button" class="text-sm  text-slate-500">Add</button>
-    
-    </div>
-    
+                <ol>
+                      @for (item of todoList; track item) {
+                        <li> {{item}} </li>
+                      }
+                </ol>
