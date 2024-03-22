@@ -7,7 +7,7 @@ import { TodoComponent } from './todo/todo.component';
   standalone: true,
   imports:[RouterOutlet, TodoComponent],
   templateUrl:'./app.component.html',
-  styleUrls:'./app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent { 
 title = 'angular-test';}
