@@ -11,16 +11,25 @@ import { NgFor } from '@angular/common';
 })
 export class TodoComponent {
   todoItem = new FormControl("");
-  todoList: string[] = []
-   
-  pushItemToList(){
+  todoList: string[] = [];
+  editIndex: number | null = null;
 
-    this.todoList.push(this.todoItem.value as string)
-    this .todoItem.setValue("")
+  pushItemToList() {
+    if (this.editIndex !== null) {
+      this.todoList[this.editIndex] = this.todoItem.value as string;
+      this.editIndex = null;
+    } else {
+      this.todoList.push(this.todoItem.value as string);
+    }
+    this.todoItem.setValue("");
   }
 
   removeItem(index: number) {
     this.todoList.splice(index, 1);
   }
 
+  editItem(index: number) {
+    this.todoItem.setValue(this.todoList[index]);
+    this.editIndex = index;
+  }
 }
