@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgFor } from '@angular/common';
+import axios from 'axios';
 
 @Component({
   selector: 'app-todo',
@@ -10,25 +11,30 @@ import { NgFor } from '@angular/common';
   styleUrls: ['./todo.component.css']
 })
 export class TodoComponent {
-  todoItem = new FormControl("");
-  todoList: string[] = [];
+  todoItem = new FormControl('', Validators.required );
+  todoList: any[] = [];
   editIndex: number | null = null;
 
-  pushItemToList() {
-    if (this.editIndex !== null) {
-      this.todoList[this.editIndex] = this.todoItem.value as string;
-      this.editIndex = null;
-    } else {
-      this.todoList.push(this.todoItem.value as string);
+
+
+  async pushItemToList() {
+    const todoItem = this.todoItem.value;
+  
+    try {
+      const response = await axios.post('http://localhost:3000/todoS', { itemName: todoItem });
+      this.todoList.push(response.data);
+      this.todoItem.reset();
+    } catch (error) {
+      console.log('Error', error);
     }
-    this.todoItem.setValue("");
   }
 
-  removeItem(index: number) {
+  
+  async removeItem(index: number) {
     this.todoList.splice(index, 1);
   }
 
-  editItem(index: number) {
+ async editItem(index: number) {
     this.todoItem.setValue(this.todoList[index]);
     this.editIndex = index;
   }
