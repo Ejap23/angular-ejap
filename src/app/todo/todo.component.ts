@@ -12,17 +12,23 @@ import axios from 'axios';
 })
 export class TodoComponent {
   todoItem = new FormControl('', Validators.required );
+  todoName = new FormControl('', Validators.required );
   todoList: any[] = [];
-  editIndex: number | null = null;
+
 
 
 
   async pushItemToList() {
     const todoItem = this.todoItem.value;
+    const todoName = this.todoName.value;
   
     try {
-      const response = await axios.post('http://localhost:3000/todoS', { itemName: todoItem });
+      const response = await axios.post('http://localhost:3000/todoS', {
+        Name: todoName,
+        taskName: todoItem
+      });
       this.todoList.push(response.data);
+      this.todoName.reset();
       this.todoItem.reset();
     } catch (error) {
       console.log('Error', error);
@@ -30,12 +36,6 @@ export class TodoComponent {
   }
 
   
-  async removeItem(index: number) {
-    this.todoList.splice(index, 1);
-  }
-
- async editItem(index: number) {
-    this.todoItem.setValue(this.todoList[index]);
-    this.editIndex = index;
-  }
+  
+ 
 }
